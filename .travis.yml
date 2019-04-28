@@ -1,0 +1,25 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID: $CC_TEST_REPORTER_ID
+language: node_js
+node_js:
+  - "10.15.3"
+env:
+  - NODE_ENV=test
+
+cache:
+  directories:
+  - "node_modules"
+
+script:
+  - yarn test
+
+services:
+  - postgresql
+
+before_script:
+  - createuser william -s -U postgres
+  - createdb pms --username=william
+  - yarn db:migrate
+
+after_success: yarn test:coverage

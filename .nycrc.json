@@ -1,0 +1,20 @@
+{
+  "all": true,
+  "include": [
+    "src"
+  ],
+  "require": [
+    "@babel/register"
+  ],
+  "reporter": [
+    "lcov",
+    "text-summary"
+  ],
+  "exclude": [
+    "tests",
+    "**/config/**/**",
+    "src/server.js"
+  ],
+  "sourceMap": false,
+  "instrument": false
+}
