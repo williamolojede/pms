@@ -1,16 +1,17 @@
 import { Sequelize, Model } from 'sequelize';
 
 /**
- * User Model
+ * Location Model
  *
  * @export
- * @class User
+ * @class Location
  * @extends {Model}
  */
 export default class Location extends Model {
   static modelFields = {
     name: {
       type: Sequelize.STRING,
+      allowNull: false,
       unique: {
         args: true,
         msg: 'Oops. There is an existing location with this name.',
@@ -20,9 +21,6 @@ export default class Location extends Model {
           args: true,
           msg: 'Oops. Please give a name for this location.',
         },
-      },
-      set(value) {
-        this.setDataValue('content', value.trim());
       },
     },
     male: {
@@ -38,14 +36,14 @@ export default class Location extends Model {
   }
 
   /**
-   * iInitializes the User model
+   * iInitializes the Location model
    *
    * @static
-   * @memberof User
+   * @memberof Location
    *
    * @param {any} sequelize the sequelize obbject
    *
-   * @returns {object} the User model
+   * @returns {object} the Location model
    */
   static init(sequelize) {
     const model = super.init(Location.modelFields, { sequelize });

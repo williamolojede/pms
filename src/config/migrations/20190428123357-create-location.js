@@ -13,6 +13,7 @@ export default {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       female: {
         type: Sequelize.INTEGER,

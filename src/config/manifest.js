@@ -5,10 +5,10 @@ getEnv();
 
 const isDevMode = process.env.NODE_ENV === 'development';
 
-const routesPlugins = ['home'].map(route => ({
+const routesPlugins = ['home', 'location'].map(route => ({
   plugin: `./api/routes/${route}`,
   routes: {
-    prefix: route === 'home' ? '/api/v1/' : `/api/v1/${route}`,
+    prefix: route === 'home' ? '/api/v1/' : `/api/v1/${route}s`,
   },
 }));
 

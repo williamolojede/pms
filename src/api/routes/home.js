@@ -2,7 +2,7 @@ import homeCTRL from '../controllers/home';
 
 const homeRoutes = {
   name: 'api-home',
-  register: (server, options) => {
+  register: (server) => {
     server.route([
       {
         method: 'GET',
