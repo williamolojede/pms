@@ -70,6 +70,7 @@ describe('Location', () => {
       expect(res.result.location.name).to.equal(fakeLocation.name);
       expect(res.result.location.male).to.equal(fakeLocation.male);
       expect(res.result.location.female).to.equal(fakeLocation.female);
+      expect(res.result.location.total).to.equal(fakeLocation.male + fakeLocation.female);
     });
 
     it('should not create a location when a location with the name exists', async () => {

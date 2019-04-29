@@ -32,6 +32,12 @@ export default class Location extends Model {
       type: Sequelize.INTEGER,
       allowNull: false,
       defaultValue: 0,
+    },
+    total: {
+      type: Sequelize.VIRTUAL(Sequelize.INTEGER, ['male', 'female']),
+      get() {
+        return this.getDataValue('male') + this.getDataValue('female')
+      }
     }
   }
 

@@ -12,10 +12,11 @@ const fakeLocation = {
 describe('Location Model', () => {
   before(() => models.sequelize.sync({ force: true }));
 
-  it('should create a user account', async () => {
+  it('should create a location', async () => {
     return expect(Location.create(fakeLocation)).to.eventually.be.fulfilled.then(
       location => {
         expect(location).to.have.property('id');
+        expect(location.total).to.equal(fakeLocation.male + fakeLocation.female);
       },
     );
   });
