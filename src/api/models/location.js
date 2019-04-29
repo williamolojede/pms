@@ -10,7 +10,30 @@ import { Sequelize, Model } from 'sequelize';
 export default class Location extends Model {
   static modelFields = {
     name: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      unique: {
+        args: true,
+        msg: 'Oops. There is an existing location with this name.',
+      },
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Oops. Please give a name for this location.',
+        },
+      },
+      set(value) {
+        this.setDataValue('content', value.trim());
+      },
+    },
+    male: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    female: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
     }
   }
 

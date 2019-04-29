@@ -14,6 +14,14 @@ export default {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      female: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      male: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
