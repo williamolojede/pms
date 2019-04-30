@@ -21,6 +21,20 @@ const locationRoutes = {
           }
         },
       },
+      {
+        method: 'DELETE',
+        path: '/{locationId}',
+        handler: locationController.deleteLocation,
+        config: {
+          auth: false,
+          tags: ['api', 'locations'],
+          validate: {
+            params: {
+              locationId: Joi.string().required().guid({ version: 'uuidv4' }),
+            }
+          }
+        },
+      },
     ]);
   },
 };

@@ -24,6 +24,22 @@ const locationCTRL = {
       })
       .code(201);
   },
+  deleteLocation: async (request, h) => {
+    const { locationId } = request.params;
+
+    const location = await Location.destroy({ where: { id: locationId } });
+
+    if (location === 0) {
+      return Boom.notFound('Oops. Location does not exist.');
+    }
+
+    return h
+      .response({
+        status: 'success',
+        message: 'Location deleted successfully.',
+      })
+      .code(200);
+  },
 };
 
 export default locationCTRL;

@@ -15,7 +15,7 @@ describe('Location Model', () => {
   it('should create a location', async () => {
     return expect(Location.create(fakeLocation)).to.eventually.be.fulfilled.then(
       location => {
-        expect(location).to.have.property('id');
+        expect(location.id).to.be.a('string');
         expect(location.total).to.equal(fakeLocation.male + fakeLocation.female);
       },
     );

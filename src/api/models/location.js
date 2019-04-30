@@ -1,4 +1,5 @@
 import { Sequelize, Model } from 'sequelize';
+import uuid from 'uuid/v4';
 
 /**
  * Location Model
@@ -9,6 +10,10 @@ import { Sequelize, Model } from 'sequelize';
  */
 export default class Location extends Model {
   static modelFields = {
+    id: {
+      type: Sequelize.UUID,
+      primaryKey: true
+    },
     name: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -53,6 +58,22 @@ export default class Location extends Model {
    */
   static init(sequelize) {
     const model = super.init(Location.modelFields, { sequelize });
+    model.beforeCreate(this.beforeHook);
     return model;
+  }
+
+  /**
+   * Hook for the Location model
+   *
+   * @static
+   * @memberof Location
+   *
+   * @param {any} location the pms api models
+   *
+   * @returns {null} no return
+   */
+  static beforeHook(location) {
+    location.id = uuid();
+    return Promise.resolve(location);
   }
 }
