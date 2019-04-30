@@ -22,6 +22,25 @@ const locationRoutes = {
         },
       },
       {
+        method: 'PATCH',
+        path: '/{locationId}',
+        handler: locationController.updateLocation,
+        config: {
+          auth: false,
+          tags: ['api', 'locations'],
+          validate: {
+            params: {
+              locationId: Joi.string().required().guid({ version: 'uuidv4' }),
+            },
+            payload: {
+              name: Joi.string(),
+              male: Joi.number(),
+              female: Joi.number(),
+            }
+          }
+        },
+      },
+      {
         method: 'DELETE',
         path: '/{locationId}',
         handler: locationController.deleteLocation,

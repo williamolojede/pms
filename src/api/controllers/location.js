@@ -24,6 +24,24 @@ const locationCTRL = {
       })
       .code(201);
   },
+  updateLocation: async (request, h) => {
+    const { params, payload } = request;
+    const location = await Location.findByPk(params.locationId);
+
+    if (!location) {
+      return Boom.notFound('Oops. Location does not exist.');
+    }
+
+    await location.update(payload);
+
+    return h
+      .response({
+        status: 'success',
+        message: 'Location updated successfully.',
+        location
+      })
+      .code(200);
+  },
   deleteLocation: async (request, h) => {
     const { locationId } = request.params;
 

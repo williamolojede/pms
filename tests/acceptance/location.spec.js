@@ -90,6 +90,55 @@ describe('Location', () => {
     });
   })
 
+  describe('update location', () => {
+    let locationId;
+    before(async () => {
+      await models.sequelize.sync({ force: true });
+      const location = await models.Location.create(fakeLocation);
+      locationId = location.id;
+    });
+
+    it('must have valid uuid/v4 locationId in request params', async () => {
+      const res = await server.inject({
+        method: 'PATCH',
+        url: `${locationsEndpoint}/notgoingtowork`,
+        payload: fakeLocation,
+      });
+      expect(res.statusCode).to.equal(400);
+      expect(res.result.statusCode).to.equal(400);
+      expect(res.result.error).to.equal('Bad Request');
+      expect(res.result.message).to.equal('Invalid request params input');
+    });
+
+    it('should update a location', async () => {
+      const res = await server.inject({
+        method: 'PATCH',
+        url: `${locationsEndpoint}/${locationId}`,
+        payload: {
+          name: 'ibadan',
+        },
+      });
+      expect(res.statusCode).to.equal(200);
+      expect(res.result.message).to.equal('Location updated successfully.');
+      expect(res.result.location.name).to.equal('ibadan');
+      expect(res.result.status).to.equal('success');
+    });
+
+    it('should respond with http status 404 when location does not exist', async () => {
+      const res = await server.inject({
+        method: 'PATCH',
+        url: `${locationsEndpoint}/82d24488-1cdc-41c1-9dda-4ff5a95ac6f5`,
+        payload: {
+          name: 'ibadan',
+        },
+      });
+      expect(res.statusCode).to.equal(404);
+      expect(res.result.statusCode).to.equal(404);
+      expect(res.result.error).to.equal('Not Found');
+      expect(res.result.message).to.equal('Oops. Location does not exist.');
+    })
+  })
+
   describe('delete location', () => {
     let locationId;
     before(async () => {
@@ -102,7 +151,6 @@ describe('Location', () => {
       const res = await server.inject({
         method: 'DELETE',
         url: `${locationsEndpoint}/notgoingtowork`,
-        payload: fakeLocation,
       });
       expect(res.statusCode).to.equal(400);
       expect(res.result.statusCode).to.equal(400);
@@ -114,7 +162,6 @@ describe('Location', () => {
       const res = await server.inject({
         method: 'DELETE',
         url: `${locationsEndpoint}/${locationId}`,
-        payload: fakeLocation,
       });
       expect(res.statusCode).to.equal(200);
       expect(res.result.message).to.equal('Location deleted successfully.');
@@ -124,8 +171,7 @@ describe('Location', () => {
     it('should respond with http status 404 when location does not exist', async () => {
       const res = await server.inject({
         method: 'DELETE',
-        url: `${locationsEndpoint}/${locationId}`,
-        payload: fakeLocation,
+        url: `${locationsEndpoint}/82d24488-1cdc-41c1-9dda-4ff5a95ac6f5`,
       });
       expect(res.statusCode).to.equal(404);
       expect(res.result.statusCode).to.equal(404);
