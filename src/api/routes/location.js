@@ -22,6 +22,15 @@ const locationRoutes = {
         },
       },
       {
+        method: 'GET',
+        path: '/',
+        handler: locationController.getLocations,
+        config: {
+          auth: false,
+          tags: ['api', 'locations'],
+        },
+      },
+      {
         method: 'PATCH',
         path: '/{locationId}',
         handler: locationController.updateLocation,

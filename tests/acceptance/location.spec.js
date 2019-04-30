@@ -90,6 +90,24 @@ describe('Location', () => {
     });
   })
 
+  describe('get locations', () => {
+    before(async () => {
+      await models.sequelize.sync({ force: true });
+      await models.Location.create(fakeLocation);
+    });
+
+    it('should retrieve all locations', async () => {
+      const res = await server.inject({
+        method: 'GET',
+        url: locationsEndpoint,
+      });
+      expect(res.statusCode).to.equal(200);
+      expect(res.result.message).to.equal('Locations retrieved successfully.');
+      expect(res.result.locations).to.have.lengthOf(1);
+      expect(res.result.status).to.equal('success');
+    });
+  });
+
   describe('update location', () => {
     let locationId;
     before(async () => {

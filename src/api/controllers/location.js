@@ -24,6 +24,17 @@ const locationCTRL = {
       })
       .code(201);
   },
+  getLocations: async (request, h) => {
+    const locations = await Location.findAll();
+
+    return h
+      .response({
+        status: 'success',
+        message: 'Locations retrieved successfully.',
+        locations,
+      })
+      .code(200);
+  },
   updateLocation: async (request, h) => {
     const { params, payload } = request;
     const location = await Location.findByPk(params.locationId);
